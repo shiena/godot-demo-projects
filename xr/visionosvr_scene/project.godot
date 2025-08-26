@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="MVR-Example"
+run/main_scene="res://node_3d.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[display]
+
+window/vsync/vsync_mode=0
+
+[input_devices]
+
+sensors/enable_accelerometer=true
+sensors/enable_gravity=true
+sensors/enable_gyroscope=true
+sensors/enable_magnetometer=true
+
+[rendering]
+
+rendering_device/fallback_to_vulkan=false
+rendering_device/fallback_to_d3d12=false
+rendering_device/fallback_to_opengl3=false
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 0)
+
+[xr]
+
+shaders/enabled=true
