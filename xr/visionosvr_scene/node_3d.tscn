@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://deflsq6tyf3ow"]
+[gd_scene load_steps=8 format=3 uid="uid://deflsq6tyf3ow"]
 
 [ext_resource type="Script" uid="uid://cqm6vt71jxiy5" path="res://node_3d.gd" id="1_6tf2l"]
 [ext_resource type="PackedScene" uid="uid://dohp772jyjxb7" path="res://stage/stage.tscn" id="2_noarx"]
 [ext_resource type="PackedScene" uid="uid://cc4idhykjp5f5" path="res://player/player.tscn" id="3_a0tk4"]
+[ext_resource type="Script" uid="uid://b0q3qvgv0p7yu" path="res://player/player.gd" id="4_r3fl7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_a202f"]
 
@@ -51,3 +52,4 @@ skeleton = NodePath("../..")
 
 [node name="Player" parent="Scene" instance=ExtResource("3_a0tk4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0612973, -14.0365)
+script = ExtResource("4_r3fl7")
