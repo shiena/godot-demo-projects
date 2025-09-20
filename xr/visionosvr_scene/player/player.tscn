@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc4idhykjp5f5"]
+[gd_scene load_steps=22 format=3 uid="uid://cc4idhykjp5f5"]
 
 [ext_resource type="PackedScene" uid="uid://yd1e7ai2k5cr" path="res://player/player.glb" id="3_uccbe"]
 [ext_resource type="Texture2D" uid="uid://kujhqacj3v72" path="res://player/controls/osb_up.webp" id="4_lmv6w"]
 [ext_resource type="Texture2D" uid="uid://68sox6egj4j7" path="res://player/controls/osb_down.webp" id="5_4oxdy"]
 [ext_resource type="Texture2D" uid="uid://r6qxvqi0unib" path="res://player/controls/osb_left.webp" id="6_k2dm4"]
 [ext_resource type="Texture2D" uid="uid://bw76q621n8fie" path="res://player/controls/osb_right.webp" id="7_yth2f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qjkh3"]
 
 [sub_resource type="AnimationNodeAnimation" id="13"]
 animation = &"run"
@@ -40,6 +42,7 @@ filters = ["Skeleton/Skeleton3D:MASTER", "Skeleton/Skeleton3D:chest", "Skeleton/
 
 [sub_resource type="AnimationNodeBlendTree" id="23"]
 graph_offset = Vector2(-221.364, -194.029)
+nodes/output/position = Vector2(880, 140)
 nodes/Animation/node = SubResource("17")
 nodes/Animation/position = Vector2(-260, -400)
 "nodes/Animation 2/node" = SubResource("13")
@@ -56,7 +59,6 @@ nodes/air_dir/node = SubResource("18")
 nodes/air_dir/position = Vector2(110, 20)
 nodes/gun/node = SubResource("19")
 nodes/gun/position = Vector2(680, 140)
-nodes/output/position = Vector2(880, 140)
 nodes/run/node = SubResource("22")
 nodes/run/position = Vector2(80, -260)
 nodes/scale/node = SubResource("20")
@@ -65,7 +67,7 @@ nodes/speed/node = SubResource("AnimationNodeBlend2_lxtyk")
 nodes/speed/position = Vector2(-80, -200)
 nodes/state/node = SubResource("AnimationNodeBlend2_bivc5")
 nodes/state/position = Vector2(460, 10)
-node_connections = [&"air_dir", 0, &"Animation 3", &"air_dir", 1, &"Animation 4", &"gun", 0, &"state", &"gun", 1, &"Animation 5", &"output", 0, &"gun", &"run", 0, &"Animation", &"run", 1, &"speed", &"scale", 0, &"run", &"speed", 0, &"Animation 6", &"speed", 1, &"Animation 2", &"state", 0, &"scale", &"state", 1, &"air_dir"]
+node_connections = [&"output", 0, &"gun", &"air_dir", 0, &"Animation 3", &"air_dir", 1, &"Animation 4", &"gun", 0, &"state", &"gun", 1, &"Animation 5", &"run", 0, &"Animation", &"run", 1, &"speed", &"scale", 0, &"run", &"speed", 0, &"Animation 6", &"speed", 1, &"Animation 2", &"state", 0, &"scale", &"state", 1, &"air_dir"]
 
 [sub_resource type="Gradient" id="Gradient_p2tu5"]
 interpolation_mode = 2
@@ -79,6 +81,10 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0.01)
 
 [node name="Player" type="CharacterBody3D"]
+
+[node name="CollisionCapsule" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("CapsuleShape3D_qjkh3")
 
 [node name="Player" parent="." instance=ExtResource("3_uccbe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0993584, 0)
@@ -138,7 +144,7 @@ parameters/air_dir/blend_amount = 0.0
 parameters/gun/blend_amount = 0.0
 parameters/run/blend_amount = 0.0
 parameters/scale/scale = 1.5
-parameters/speed/blend_amount = 0
+parameters/speed/blend_amount = 0.0
 parameters/state/blend_amount = 0.0
 
 [node name="Forward" type="TouchScreenButton" parent="."]
