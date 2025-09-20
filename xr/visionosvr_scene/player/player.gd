@@ -31,7 +31,7 @@ var coins := 0
 @onready var gravity: Vector3 = ProjectSettings.get_setting("physics/3d/default_gravity") * \
 		ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
-@onready var _camera := $Target/Camera3D as Camera3D
+#@onready var _camera := $Target/Camera3D as Camera3D
 @onready var _animation_tree := $AnimationTree as AnimationTree
 
 
@@ -43,11 +43,11 @@ func _physics_process(delta: float) -> void:
 
 	# Update coin count and its "parallax" copies.
 	# This gives text a pseudo-3D appearance while still using Label3D instead of the more limited TextMesh.
-	%CoinCount.text = str(coins)
-	%CoinCount.get_node("Parallax").text = str(coins)
-	%CoinCount.get_node("Parallax2").text = str(coins)
-	%CoinCount.get_node("Parallax3").text = str(coins)
-	%CoinCount.get_node("Parallax4").text = str(coins)
+	#%CoinCount.text = str(coins)
+	#%CoinCount.get_node("Parallax").text = str(coins)
+	#%CoinCount.get_node("Parallax2").text = str(coins)
+	#%CoinCount.get_node("Parallax3").text = str(coins)
+	#%CoinCount.get_node("Parallax4").text = str(coins)
 
 	velocity += gravity * delta
 
@@ -60,14 +60,15 @@ func _physics_process(delta: float) -> void:
 	var horizontal_speed := horizontal_velocity.length()
 
 	# Player input.
-	var cam_basis := _camera.get_global_transform().basis
+	#var cam_basis := _camera.get_global_transform().basis
 	var movement_vec2 := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
-	var movement_direction := cam_basis * Vector3(movement_vec2.x, 0, movement_vec2.y)
+	#var movement_direction := cam_basis * Vector3(movement_vec2.x, 0, movement_vec2.y)
+	var movement_direction := Vector3(movement_vec2.x, 0, movement_vec2.y)
 	movement_direction.y = 0
 	movement_direction = movement_direction.normalized()
 
 	var jump_attempt := Input.is_action_pressed(&"jump")
-	var shoot_attempt := Input.is_action_pressed(&"shoot")
+	#var shoot_attempt := Input.is_action_pressed(&"shoot")
 
 	if is_on_floor():
 		var sharp_turn := horizontal_speed > 0.1 and \
@@ -94,30 +95,30 @@ func _physics_process(delta: float) -> void:
 
 		horizontal_velocity = horizontal_direction * horizontal_speed
 
-		var mesh_xform := ($Player/Skeleton as Node3D).get_transform()
-		var facing_mesh := -mesh_xform.basis[0].normalized()
-		facing_mesh = (facing_mesh - Vector3.UP * facing_mesh.dot(Vector3.UP)).normalized()
-
-		if horizontal_speed > 0:
-			facing_mesh = adjust_facing(
-				facing_mesh,
-				movement_direction,
-				delta,
-				1.0 / horizontal_speed * TURN_SPEED,
-				Vector3.UP
-			)
-		var m3 := Basis(
-			-facing_mesh,
-			Vector3.UP,
-			-facing_mesh.cross(Vector3.UP).normalized()
-		).scaled(CHAR_SCALE)
-
-		$Player/Skeleton.set_transform(Transform3D(m3, mesh_xform.origin))
+		#var mesh_xform := ($Player/Skeleton as Node3D).get_transform()
+		#var facing_mesh := -mesh_xform.basis[0].normalized()
+		#facing_mesh = (facing_mesh - Vector3.UP * facing_mesh.dot(Vector3.UP)).normalized()
+		#
+		#if horizontal_speed > 0:
+		#	facing_mesh = adjust_facing(
+		#		facing_mesh,
+		#		movement_direction,
+		#		delta,
+		#		1.0 / horizontal_speed * TURN_SPEED,
+		#		Vector3.UP
+		#	)
+		#var m3 := Basis(
+		#	-facing_mesh,
+		#	Vector3.UP,
+		#	-facing_mesh.cross(Vector3.UP).normalized()
+		#).scaled(CHAR_SCALE)
+		#
+		#$Player/Skeleton.set_transform(Transform3D(m3, mesh_xform.origin))
 
 		if not jumping and jump_attempt:
 			vertical_velocity = JUMP_VELOCITY
 			jumping = true
-			$SoundJump.play()
+			#$SoundJump.play()
 
 	else:
 		anim = _Anim.AIR
@@ -146,23 +147,23 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if shoot_blend > 0:
-		shoot_blend *= 0.97
-		if (shoot_blend < 0):
-			shoot_blend = 0
-
-	if shoot_attempt and not prev_shoot:
-		shoot_blend = SHOOT_TIME
-		var bullet := preload("res://player/bullet/bullet.tscn").instantiate() as Bullet
-		bullet.set_transform($Player/Skeleton/Bullet.get_global_transform().orthonormalized())
-		get_parent().add_child(bullet)
-		bullet.set_linear_velocity(
-			$Player/Skeleton/Bullet.get_global_transform().basis[2].normalized() * BULLET_SPEED
-		)
-		bullet.add_collision_exception_with(self)
-		$SoundShoot.play()
-
-	prev_shoot = shoot_attempt
+	#if shoot_blend > 0:
+	#	shoot_blend *= 0.97
+	#	if (shoot_blend < 0):
+	#		shoot_blend = 0
+	#
+	#if shoot_attempt and not prev_shoot:
+	#	shoot_blend = SHOOT_TIME
+	#	var bullet := preload("res://player/bullet/bullet.tscn").instantiate() as Bullet
+	#	bullet.set_transform($Player/Skeleton/Bullet.get_global_transform().orthonormalized())
+	#	get_parent().add_child(bullet)
+	#	bullet.set_linear_velocity(
+	#		$Player/Skeleton/Bullet.get_global_transform().basis[2].normalized() * BULLET_SPEED
+	#	)
+	#	bullet.add_collision_exception_with(self)
+	#	$SoundShoot.play()
+	#
+	#prev_shoot = shoot_attempt
 
 	if is_on_floor():
 		# How much the player should be blending between the "idle" and "walk/run" animations.
@@ -173,7 +174,7 @@ func _physics_process(delta: float) -> void:
 
 	_animation_tree[&"parameters/state/blend_amount"] = anim
 	_animation_tree[&"parameters/air_dir/blend_amount"] = clampf(-velocity.y / 4 + 0.5, 0, 1)
-	_animation_tree[&"parameters/gun/blend_amount"] = minf(shoot_blend, 1.0)
+	#_animation_tree[&"parameters/gun/blend_amount"] = minf(shoot_blend, 1.0)
 
 
 func adjust_facing(facing: Vector3, target: Vector3, step: float, adjust_rate: float, \
