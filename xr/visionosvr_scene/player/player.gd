@@ -32,6 +32,7 @@ var coins := 0
 		ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
 #@onready var _camera := $Target/Camera3D as Camera3D
+@onready var _camera := $Target/Camera3D as Node3D
 @onready var _animation_tree := $AnimationTree as AnimationTree
 
 
@@ -60,10 +61,9 @@ func _physics_process(delta: float) -> void:
 	var horizontal_speed := horizontal_velocity.length()
 
 	# Player input.
-	#var cam_basis := _camera.get_global_transform().basis
+	var cam_basis := _camera.get_global_transform().basis
 	var movement_vec2 := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
-	#var movement_direction := cam_basis * Vector3(movement_vec2.x, 0, movement_vec2.y)
-	var movement_direction := Vector3(movement_vec2.x, 0, movement_vec2.y)
+	var movement_direction := cam_basis * Vector3(movement_vec2.x, 0, movement_vec2.y)
 	movement_direction.y = 0
 	movement_direction = movement_direction.normalized()
 
@@ -95,25 +95,25 @@ func _physics_process(delta: float) -> void:
 
 		horizontal_velocity = horizontal_direction * horizontal_speed
 
-		#var mesh_xform := ($Player/Skeleton as Node3D).get_transform()
-		#var facing_mesh := -mesh_xform.basis[0].normalized()
-		#facing_mesh = (facing_mesh - Vector3.UP * facing_mesh.dot(Vector3.UP)).normalized()
-		#
-		#if horizontal_speed > 0:
-		#	facing_mesh = adjust_facing(
-		#		facing_mesh,
-		#		movement_direction,
-		#		delta,
-		#		1.0 / horizontal_speed * TURN_SPEED,
-		#		Vector3.UP
-		#	)
-		#var m3 := Basis(
-		#	-facing_mesh,
-		#	Vector3.UP,
-		#	-facing_mesh.cross(Vector3.UP).normalized()
-		#).scaled(CHAR_SCALE)
-		#
-		#$Player/Skeleton.set_transform(Transform3D(m3, mesh_xform.origin))
+		var mesh_xform := ($Player/Skeleton as Node3D).get_transform()
+		var facing_mesh := -mesh_xform.basis[0].normalized()
+		facing_mesh = (facing_mesh - Vector3.UP * facing_mesh.dot(Vector3.UP)).normalized()
+		
+		if horizontal_speed > 0:
+			facing_mesh = adjust_facing(
+				facing_mesh,
+				movement_direction,
+				delta,
+				1.0 / horizontal_speed * TURN_SPEED,
+				Vector3.UP
+			)
+		var m3 := Basis(
+			-facing_mesh,
+			Vector3.UP,
+			-facing_mesh.cross(Vector3.UP).normalized()
+		).scaled(CHAR_SCALE)
+		
+		$Player/Skeleton.set_transform(Transform3D(m3, mesh_xform.origin))
 
 		if not jumping and jump_attempt:
 			vertical_velocity = JUMP_VELOCITY
