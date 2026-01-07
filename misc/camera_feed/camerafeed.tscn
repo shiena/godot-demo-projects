@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://oiv4p8ii3am4"]
+[gd_scene format=3 uid="uid://oiv4p8ii3am4"]
 
 [ext_resource type="Script" uid="uid://dxaoavn781kxe" path="res://camerafeed.gd" id="1_fuswq"]
 [ext_resource type="Shader" uid="uid://dhjh7s6i7jnlp" path="res://ycbcr_to_rgb.gdshader" id="2_0uyi5"]
@@ -42,7 +42,21 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="CameraApp" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_permission_normal"]
+bg_color = Color(0.2, 0.5, 0.8, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_permission_hover"]
+bg_color = Color(0.3, 0.6, 0.9, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="CameraApp" type="Control" unique_id=418879243]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,7 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fuswq")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=800907370]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,14 +74,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="CameraDisplay" type="Control" parent="."]
+[node name="CameraDisplay" type="Control" parent="." unique_id=1987229930]
 anchors_preset = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 700.0
 offset_bottom = 1260.0
 
-[node name="MirrorContainer" type="Control" parent="CameraDisplay"]
+[node name="MirrorContainer" type="Control" parent="CameraDisplay" unique_id=1850494703]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +90,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="RotationContainer" type="Control" parent="CameraDisplay/MirrorContainer"]
+[node name="RotationContainer" type="Control" parent="CameraDisplay/MirrorContainer" unique_id=551260684]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,7 +99,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="AspectContainer" type="AspectRatioContainer" parent="CameraDisplay/MirrorContainer/RotationContainer"]
+[node name="AspectContainer" type="AspectRatioContainer" parent="CameraDisplay/MirrorContainer/RotationContainer" unique_id=1911510357]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,12 +108,12 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
 
-[node name="CameraPreview" type="TextureRect" parent="CameraDisplay/MirrorContainer/RotationContainer/AspectContainer"]
+[node name="CameraPreview" type="TextureRect" parent="CameraDisplay/MirrorContainer/RotationContainer/AspectContainer" unique_id=231281310]
 material = SubResource("ShaderMaterial_lgiw1")
 layout_mode = 2
 expand_mode = 1
 
-[node name="DrawerContainer" type="Control" parent="."]
+[node name="DrawerContainer" type="Control" parent="." unique_id=2120195199]
 modulate = Color(1, 1, 1, 0.5019608)
 layout_mode = 1
 anchors_preset = 10
@@ -108,7 +122,7 @@ offset_top = 160.0
 offset_bottom = 160.0
 grow_horizontal = 2
 
-[node name="Drawer" type="PanelContainer" parent="DrawerContainer"]
+[node name="Drawer" type="PanelContainer" parent="DrawerContainer" unique_id=617236126]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -117,22 +131,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
-[node name="DrawerContent" type="MarginContainer" parent="DrawerContainer/Drawer"]
+[node name="DrawerContent" type="MarginContainer" parent="DrawerContainer/Drawer" unique_id=93200021]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DrawerContainer/Drawer/DrawerContent"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DrawerContainer/Drawer/DrawerContent" unique_id=687341086]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="HandleBar" type="Control" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="HandleBar" type="Control" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1706428189]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Bar" type="ColorRect" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/HandleBar"]
+[node name="Bar" type="ColorRect" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/HandleBar" unique_id=663312817]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -147,11 +161,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.5, 0.5, 0.5, 1)
 
-[node name="ButtonContainer" type="HBoxContainer" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="ButtonContainer" type="HBoxContainer" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=422251785]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="StartOrStopButton" type="Button" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer"]
+[node name="StartOrStopButton" type="Button" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer" unique_id=167818591]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -160,7 +174,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3")
 text = "Stop"
 
-[node name="ReloadButton" type="Button" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer"]
+[node name="ReloadButton" type="Button" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer" unique_id=1289133198]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -169,32 +183,71 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3")
 text = "Reload"
 
-[node name="CameraLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="CameraLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1215480226]
 layout_mode = 2
 text = "Camera"
 
-[node name="CameraList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="CameraList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1914948274]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="FormatLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="FormatLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1679243280]
 layout_mode = 2
 text = "Format"
 
-[node name="FormatList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="FormatList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=7868013]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="MirrorLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="MirrorLabel" type="Label" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1556455286]
 layout_mode = 2
 text = "Mirror"
 
-[node name="MirrorList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer"]
+[node name="MirrorList" type="OptionButton" parent="DrawerContainer/Drawer/DrawerContent/VBoxContainer" unique_id=1476419984]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+
+[node name="PermissionPanel" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="CenterContainer" type="CenterContainer" parent="PermissionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PermissionPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="PermissionPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Camera permission is required"
+horizontal_alignment = 1
+
+[node name="PermissionButton" type="Button" parent="PermissionPanel/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_permission_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_permission_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_permission_hover")
+text = "Grant Permission"
 
 [connection signal="pressed" from="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer/StartOrStopButton" to="." method="_on_start_or_stop_button_pressed"]
 [connection signal="pressed" from="DrawerContainer/Drawer/DrawerContent/VBoxContainer/ButtonContainer/ReloadButton" to="." method="_on_reload_button_pressed"]
 [connection signal="item_selected" from="DrawerContainer/Drawer/DrawerContent/VBoxContainer/CameraList" to="." method="_on_camera_list_item_selected"]
 [connection signal="item_selected" from="DrawerContainer/Drawer/DrawerContent/VBoxContainer/FormatList" to="." method="_on_format_list_item_selected"]
 [connection signal="item_selected" from="DrawerContainer/Drawer/DrawerContent/VBoxContainer/MirrorList" to="." method="_on_mirror_list_item_selected"]
+[connection signal="pressed" from="PermissionPanel/CenterContainer/VBoxContainer/PermissionButton" to="." method="_on_permission_button_pressed"]
